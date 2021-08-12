@@ -1,5 +1,4 @@
 # cities-and-numbers v2.0
- - The developer is not guilty if any harm was made using this program.
 
 #### Files
  - There is the main code in the main.py file.
