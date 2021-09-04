@@ -4,6 +4,6 @@
  - There is the main code in the main.py file.
 
 To start the program you need to run main.py file with a Python interpreter.
-You can write to the developer using email: mdddmmmmm@yandex.ru
+You can write to the developer using email: bigproject404@yandex.ru
 
 I'd be glad to get any feedback or development ideas.
