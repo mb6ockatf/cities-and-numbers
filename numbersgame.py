@@ -27,22 +27,12 @@ def numbersgame():
 
     def turnoff():
         print('Всё, игра закончена. Программа выключится через 8 секунд.')
-        print('Осталось 8')
-        sleep(1)
-        print('Осталось 7')
-        sleep(1)
-        print('Осталось 6')
-        sleep(1)
-        print('Осталось 5')
-        sleep(1)
-        print('Осталось 4')
-        sleep(1)
-        print('Осталось 3')
-        sleep(1)
-        print('Осталось 2')
-        sleep(1)
-        print('Осталось 1')
-        sleep(1)
+        left_time = 8
+        for j in range(:8, -1):
+            print('Осталось %i секунд(ы)' % left_time)
+            left_time += left_time - 1
+            sleep(1)
+        # TODO: bugs may appear in this cycle above
         quit()
 
     def analyticsnumbers(num, answer_num):
@@ -101,4 +91,3 @@ def numbersgame():
     mentioned = []
     print('Ты начинаешь.')
     oneturn()
-
