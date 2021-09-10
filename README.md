@@ -1,9 +1,10 @@
-# cities-and-numbers v2.0
+# cities-and-numbers
 
-#### Files
- - There is the main code in the main.py file.
+Мой единственный репозиторий на русском языке.
+#### Code review
+ - Основной код лежит в файле main.py
 
-To start the program you need to run main.py file with a Python interpreter.
-You can contact me using email: bigproject404@yandex.ru
+Чтобы запустить программу, необходимо запустить файл main.py с помощью интерпретатора Python.
+Со мной можно связаться по электронной почте: bigproject404@yandex.ru
 
-I'd be glad to get any feedback or development ideas.
+Буду рад любым отзывам и идеям.
