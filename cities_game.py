@@ -3,7 +3,7 @@ from turnoff import turnoff
 from random import randint
 
 
-def cities_rules():
+def text_cities_rules():
     print("Правила игры в 'Города России':")
     print("Каждый участник в свою очередь называет реально существующий город России,")
     print("название которого начинается на ту букву, которой оканчивается название предыдущего названного города.")
@@ -1304,7 +1304,6 @@ def cities_game():
             else:
                 pass
             snbja(input_word)
-
 
     print("Игра в 'Города России' началась.")
     print("Чтобы выйти, введите '!'")

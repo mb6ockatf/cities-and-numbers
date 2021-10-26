@@ -3,7 +3,7 @@ from random import randint
 from turnoff import turnoff
 
 
-def numbers_rules():
+def text_numbers_rules():
     print("Правила игры в 'Числа': ")
     print("Назовите любое целое число от 1 до 100. Нельзя называть уже названные \
         числа, следовательно, в одной игре не может быть больше 50 конов. \
