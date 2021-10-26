@@ -1,9 +1,7 @@
-from time import sleep
-from random import randint
-from turnoff import *
 
 
 def text_numbers_rules():
+    from time import sleep
     print("Правила игры в 'Числа': ")
     print("Назовите любое целое число от 1 до 100. Нельзя называть уже названные \
         числа, следовательно, в одной игре не может быть больше 50 конов. \
@@ -14,6 +12,8 @@ def text_numbers_rules():
 
 def numbers_game():
     def numbers_turn(num):
+        from random import randint
+        from turnoff import turnoff
         print()
         print()
         print('Это', int(len(overall) + 1), 'кон.')
