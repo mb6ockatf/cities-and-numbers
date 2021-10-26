@@ -1,6 +1,6 @@
 from time import sleep
 from random import randint
-from turnoff import turnoff
+from turnoff import *
 
 
 def text_numbers_rules():
@@ -16,84 +16,83 @@ def numbers_game():
     def numbers_turn(num):
         print()
         print()
-        print('Это', int(len(counted_overall) + 1), 'кон.')
+        print('Это', int(len(overall) + 1), 'кон.')
         if int(num) != '!':
-            if num not in mentioned_cities:
+            if num not in mentioned_nums:
                 answer_num = randint(1, 100)
-                if answer_num not in mentioned_cities:
+                if answer_num not in mentioned_nums:
                     print(num, ", а мой ответ равен", answer_num)
-                    check_winner_count_words(num, answer_num)
+                    check_turn_win(num, answer_num)
                 else:
-                    while answer_num in mentioned_cities:
+                    while answer_num in mentioned_nums:
                         answer_num = randint(1, 100)
                     print('% ,', " а мой ответ равен", answer_num % int(num))
-                    check_winner_count_words(num, answer_num)
+                    check_turn_win(num, answer_num)
                 num = input('Вводи новое число: ')
             else:
                 print('Это число уже было названо.')
-                print('Кон завершается аварийно, никто не выиграл. Запускаю следующий кон.')
                 num = input('Введите новое число: ')
+            return num
         else:
             show_results()
             turnoff()
 
-    def check_winner_count_words(num, answer_num):
-        counted_overall.append("1")
-        mentioned_cities.append(str(num))
-        mentioned_cities.append(str(answer_num))
+    def check_turn_win(num, answer_num):
+        overall.append("1")
+        mentioned_nums.append(str(num))
+        mentioned_nums.append(str(answer_num))
         if int(num) > int(answer_num):
             print("Ты выиграл.")
-            counted_wins.append("1")
+            wins.append("1")
         elif int(num) < int(answer_num):
             print("Выиграл я.")
-            counted_loses.append("1")
+            loses.append("1")
         elif int(num) == int(answer_num):
             print("Совпадение века, наши числа равны.")
-            counted_balance.append("1")
+            balance.append("1")
         print('Кон засчитан.')
         print()
 
     def show_results():
         """
-        Программа выдаёт разные сообщения в зависимости от числа
+        Программа выдаёт разные окончания слов в зависимости от числа
         """
         print('Пришло время подвести итоги.')
-        if len(counted_wins) % 10 == 1 or len(counted_wins) % 10 == 0 or \
-                len(counted_wins) % 10 == 5 or len(counted_wins) % 10 == 6 or \
-                len(counted_wins) % 10 == 7 or len(counted_wins) % 10 == 8 or \
-                len(counted_wins) % 10 == 9:
-            print('Пользователь выиграл', len(counted_wins), 'раз.')
-        elif len(counted_wins) % 10 == 2 or len(counted_wins) % 10 == 3 \
-                or len(counted_wins) % 10 == 4:
-            print('Пользователь выиграл', len(counted_wins), 'раза.')
+        if len(wins) % 10 == 1 or len(wins) % 10 == 0 or \
+                len(wins) % 10 == 5 or len(wins) % 10 == 6 or \
+                len(wins) % 10 == 7 or len(wins) % 10 == 8 or \
+                len(wins) % 10 == 9:
+            print('Пользователь выиграл', len(wins), 'раз.')
+        elif len(wins) % 10 == 2 or len(wins) % 10 == 3 \
+                or len(wins) % 10 == 4:
+            print('Пользователь выиграл', len(wins), 'раза.')
 
-        if len(counted_loses) % 10 == 1 or len(counted_loses) % 10 == 0 or \
-                len(counted_loses) % 10 == 5 or len(counted_loses) % 10 == 6 or \
-                len(counted_loses) % 10 == 7 or len(counted_loses) % 10 == 8 or \
-                len(counted_loses) % 10 == 9:
-            print('Пользователь выиграл', len(counted_loses), 'раз.')
-        elif len(counted_loses) % 10 == 2 or len(counted_loses) % 10 == 3 \
-                or len(counted_loses) % 10 == 4:
-            print('Пользователь выиграл', len(counted_loses), 'раза.')
+        if len(loses) % 10 == 1 or len(loses) % 10 == 0 or \
+                len(loses) % 10 == 5 or len(loses) % 10 == 6 or \
+                len(loses) % 10 == 7 or len(loses) % 10 == 8 or \
+                len(loses) % 10 == 9:
+            print('Пользователь выиграл', len(loses), 'раз.')
+        elif len(loses) % 10 == 2 or len(loses) % 10 == 3 \
+                or len(loses) % 10 == 4:
+            print('Пользователь выиграл', len(loses), 'раза.')
 
-        if len(counted_balance) % 10 == 1 or len(counted_balance) % 10 == 0 or \
-                len(counted_balance) % 10 == 5 or len(counted_balance) % 10 == 6 or \
-                len(counted_balance) % 10 == 7 or len(counted_balance) % 10 == 8 or \
-                len(counted_balance) % 10 == 9:
-            print('Пользователь выиграл', len(counted_balance), 'раз.')
-        elif len(counted_balance) % 10 == 2 or len(counted_balance) % 10 == 3 \
-                or len(counted_wins) % 10 == 4:
-            print('Пользователь выиграл', len(counted_wins), 'раза.')
+        if len(balance) % 10 == 1 or len(balance) % 10 == 0 or \
+                len(balance) % 10 == 5 or len(balance) % 10 == 6 or \
+                len(balance) % 10 == 7 or len(balance) % 10 == 8 or \
+                len(balance) % 10 == 9:
+            print('Пользователь выиграл', len(balance), 'раз.')
+        elif len(balance) % 10 == 2 or len(balance) % 10 == 3 \
+                or len(wins) % 10 == 4:
+            print('Пользователь выиграл', len(wins), 'раза.')
 
     print("Игра в 'Числа' началась.")
     print('Чтобы закончить, введите !')
-    counted_wins = []
-    counted_loses = []
-    counted_overall = []
-    counted_balance = []
-    mentioned_cities = []
+    wins = []
+    loses = []
+    overall = []
+    balance = []
+    mentioned_nums = []
     print('Ты начинаешь.')
-    num = input('Вводи своё число: ')
-    endless_cycle = True
-    while endless_cycle:
-        numbers_turn(num)
+    your_num = input('Вводи своё число: ')
+    while True:
+        numbers_turn(your_num)
