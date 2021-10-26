@@ -1,4 +1,4 @@
-from cities_game import text_cities_rules, cities_game
+from cities_game import text_cities_rules
 from numbers_game import text_numbers_rules, numbers_game
 
 
@@ -23,9 +23,9 @@ def welcome():
             rules_or_game = input("Ваш выбор: ")
         if rules_or_game == 1:
             text_cities_rules()
-            cities_game()
+            import cities_game
         else:
-            cities_game()
+            import cities_game
     elif game_choice == 2:
         print("Вы выбрали пункт 'Числа'.")
         print("Чтобы узнать правила, введите 1. Чтобы начать, введите 2")
