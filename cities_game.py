@@ -1,5 +1,3 @@
-from time import sleep
-from turnoff import turnoff
 from random import randint
 
 
@@ -8,11 +6,13 @@ def text_cities_rules():
     print("Каждый участник в свою очередь называет реально существующий город России,")
     print("название которого начинается на ту букву, которой оканчивается название предыдущего названного города.")
     print('Если вы уже дочитали это сообщение, то просто подождите.')
+    from time import sleep
     sleep(8)
 
 
 def cities_game():
     def cities_turn(city):
+        from turnoff import turnoff
         print('Это был', int(len(turn_number)) + 1, 'кон')
         if city != '!':
             do_search(city)
