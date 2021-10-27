@@ -37,8 +37,7 @@ class InputWord:
     def pass_first_word(self):
         if self.word[0] == str(prevword)[-1]:
             return True
-        else:
-            return False
+        return False
 
     def reply(self):
         from cities_lists import abv, abc
