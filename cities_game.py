@@ -21,7 +21,7 @@ def check(city) -> None:
             city.word = InputWord(input('Вводи название города: ')).word
         pass_check = True
         if not first_time:
-            while not city.pass_first_word():
+            while not city.pass_first_word(prevword):
                 print('Это слово начинается не на последнюю букву предыдущего города.\nВведите другое.')
                 city.word = InputWord(input('Вводи название города: ')).word
                 pass_check = False
@@ -34,8 +34,8 @@ class InputWord:
         self.last_letter = self.word[-1]
         self.first_letter = self.word[0]
 
-    def pass_first_word(self):
-        if self.word[0] == str(prevword)[-1]:
+    def pass_first_word(self, previous):
+        if self.word[0] == previous.last_letter:
             return True
         return False
 
@@ -45,10 +45,8 @@ class InputWord:
             if k == self.last_letter:
                 for j in abc[k]:
                     if j not in mentioned:
-                        return j
-
-    def mention(self):
-        mentioned.append(self.word)
+                        return str(j)
+        return False
 
 
 def cities_game():  # noqa: C901
@@ -60,7 +58,7 @@ def cities_game():  # noqa: C901
     city = InputWord(input('Вводи название города: '))
     while city != '!':
         check(city)
-        city.mention()
+        mentioned.append(city)
         prevword = city.reply()
         if not prevword:
             print('Я проиграл - незнаю города на такую букву.')
@@ -68,7 +66,7 @@ def cities_game():  # noqa: C901
             print('А мой ответ - ' + str(prevword))
             first_time = False
             prevword = InputWord(prevword)
-            prevword.mention()
+            mentioned.append(prevword)
         turn += 1
         print('Это', turn + 1, 'кон.')
         city = InputWord(input('Вводи название города: '))
