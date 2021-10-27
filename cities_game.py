@@ -7,54 +7,60 @@ def text_cities_rules():
     sleep(8)
 
 
+first_time = True
+mentioned = []
+prevword = 0
+
+
+def check(city) -> None:
+    global first_time
+    pass_check = False
+    while not pass_check:
+        while city.word in mentioned:
+            print('Такой город уже был. \nВводи другой: ')
+            city.word = InputWord(input('Вводи название города: ')).word
+        pass_check = True
+        if not first_time:
+            while not city.pass_first_word():
+                print('Это слово начинается не на последнюю букву предыдущего города.\nВведите другое.')
+                city.word = InputWord(input('Вводи название города: ')).word
+                pass_check = False
+    first_time = False
+
+
+class InputWord:
+    def __init__(self, word):
+        self.word = word
+        self.last_letter = self.word[-1]
+        self.first_letter = self.word[0]
+
+    def pass_first_word(self):
+        if self.word[0] == str(prevword)[-1]:
+            return True
+        else:
+            return False
+
+    def reply(self):
+        from cities_lists import abv, abc
+        for k in abc:
+            if k == self.last_letter:
+                for j in abc[k]:
+                    if j not in mentioned:
+                        return j
+
+    def mention(self):
+        mentioned.append(self.word)
+
+
 def cities_game():
-    class InputWord:
-        def __init__(self, word):
-            self.word = word
-            last_letter = self.word[-1]
-            first_letter = self.word[0]
-            self.last_letter = last_letter
-            self.first_letter = first_letter
-
-        def pass_first_word(self):
-            if self.word[0] == prevword[-1]:
-                return True
-            else:
-                return False
-
-        def reply(self):
-            from cities_lists import abv, abc
-            position = 0
-            for char in abv:
-                if not first_time:
-                    position += 1
-                if char == self.last_letter:
-                    break
-                if first_time:
-                    position += 1
-            try:
-                for g in abc[position]:
-                    if g not in mentioned:
-                        return g
-            except IndexError:
-                return False
-
-        def mention(self):
-            mentioned.append(self.word)
-
-    print("Игра в 'Города России' началась.")
-    print("Чтобы выйти, введите '!'")
-    first_time = True
-    mentioned = []
-    turn_number = 0
+    global mentioned, first_time, prevword
+    print("Игра в 'Города России' началась.\nЧтобы выйти, введите '!'")
     print('----------------------------')
     turn = 0
     print('Это', turn + 1, 'кон.')
     city = InputWord(input('Вводи название города: '))
     while city != '!':
-        while city in mentioned:
-            print('Такой город уже был. \nВводи другой: ')
-            city = input('Вводи название города: ')
+        check(city)
         city.mention()
         prevword = city.reply()
         if not prevword:
@@ -67,9 +73,6 @@ def cities_game():
         turn += 1
         print('Это', turn + 1, 'кон.')
         city = InputWord(input('Вводи название города: '))
-        while not city.pass_first_word:
-            print('Это слово начинается не на последнюю букву предыдущего города.\nВведите другое.')
-            city = InputWord(input('Вводи название города: '))
     print('Игра завершилась на', turn, 'коне.')
     from turnoff import turnoff
     turnoff()
