@@ -47,8 +47,7 @@ def numbers_game():  # noqa: C901
         def check_range(self) -> bool:
             if 1 <= self.num <= 100:
                 return True
-            else:
-                return False
+            return False
 
         def check(self) -> None:
             while self.num in mentioned or not 1 <= self.num <= 100:
