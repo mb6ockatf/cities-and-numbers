@@ -40,7 +40,7 @@ class InputWord:
         return False
 
     def reply(self):
-        from cities_lists import abv, abc
+        from cities_lists import abc
         for k in abc:
             if k == self.last_letter:
                 for j in abc[k]:
