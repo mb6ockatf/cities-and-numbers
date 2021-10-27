@@ -34,7 +34,7 @@ balance = 0
 mentioned = []
 
 
-def numbers_game():
+def numbers_game():  # noqa: C901
     global wins, loses, overall, balance, mentioned
 
     class InputNum:

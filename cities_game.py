@@ -51,7 +51,7 @@ class InputWord:
         mentioned.append(self.word)
 
 
-def cities_game():
+def cities_game():  # noqa: C901
     global mentioned, first_time, prevword
     print("Игра в 'Города России' началась.\nЧтобы выйти, введите '!'")
     print('----------------------------')
