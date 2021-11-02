@@ -58,8 +58,9 @@ class InputWord:
                                 mentioned.append(str(j))
                                 return str(j)
                         return False
-                    else:
-                        self.last_letter = self.word[-2]
+                    self.last_letter = self.word[-2]
+                    break
+            continue
 
 
 def cities_game():  # noqa: C901
