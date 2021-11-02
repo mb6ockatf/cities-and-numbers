@@ -39,7 +39,8 @@ class InputWord:
         if self.word == '!':
             print('Игра завершилась на', turn, 'коне.')
             off()
-        self.last_letter = self.word[-1]
+        self.last_letter = self.word[-1] if (self.word[-1] != 'ь' 
+            and self.word[-1] != 'ъ' and self.word != 'ы') else self.word[-2]
         self.first_letter = self.word[0]
 
     def pass_first_word(self, previous):
