@@ -52,7 +52,7 @@ class InputWord:
         while True:
             for k in abc:
                 if k == self.last_letter:
-                    if k is not False:
+                    if abc[k] is not False:
                         for j in abc[k]:
                             if str(j) not in mentioned:
                                 mentioned.append(str(j))
