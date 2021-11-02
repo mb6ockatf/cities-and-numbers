@@ -54,11 +54,9 @@ def numbers_game():  # noqa: C901
                     self = InputNum(input('Вводи своё число: '))
             mentioned.append(self.num)
 
-
     print("Игра в 'Числа' началась.")
     print('Чтобы закончить, введите !')
     print('Ты начинаешь.')
-    first_time = True
     your_num = InputNum(input('Вводи своё число: '))
     while your_num.num != '!':
         your_num.check()

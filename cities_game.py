@@ -1,5 +1,6 @@
 from off import off
 
+
 def text_cities_rules():
     from time import sleep
     print("Правила игры в 'Города России':\n\
@@ -51,7 +52,7 @@ class InputWord:
         while True:
             for k in abc:
                 if k == self.last_letter:
-                    if k != False:
+                    if k is not False:
                         for j in abc[k]:
                             if str(j) not in mentioned:
                                 mentioned.append(str(j))
