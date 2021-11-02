@@ -1,36 +1,43 @@
+from off import off
+
 def text_cities_rules():
-    print("Правила игры в 'Города России':\n"
-          "Каждый участник в свою очередь называет реально существующий город России,\n"
-          "название которого начинается на ту букву, которой оканчивается название предыдущего названного города.\n"
-          'Если вы уже дочитали это сообщение, то просто подождите.\n')
     from time import sleep
+    print("Правила игры в 'Города России':\n\
+        Каждый участник в свою очередь называет реально существующий город России,\n\
+        название которого начинается на ту букву, которой оканчивается название предыдущего названного города.\n\
+        Если вы уже дочитали это сообщение, то просто подождите.\n")
     sleep(8)
 
 
 first_time = True
 mentioned = []
 prevword = 0
+turn = 0
 
 
-def check(city) -> None:
+def check(city):
     global first_time
     pass_check = False
     while not pass_check:
         while city.word in mentioned:
             print('Такой город уже был. \nВводи другой: ')
-            city.word = InputWord(input('Вводи название города: ')).word
+            city = InputWord(input('Вводи название города: '))
         pass_check = True
         if not first_time:
             while not city.pass_first_word(prevword):
                 print('Это слово начинается не на последнюю букву предыдущего города.\nВведите другое.')
-                city.word = InputWord(input('Вводи название города: ')).word
+                city = InputWord(input('Вводи название города: '))
                 pass_check = False
-    first_time = False
+    mentioned.append(city.word)
 
 
 class InputWord:
     def __init__(self, word):
-        self.word = word
+        global turn
+        self.word = word.lower()
+        if self.word == '!':
+            print('Игра завершилась на', turn, 'коне.')
+            off()
         self.last_letter = self.word[-1]
         self.first_letter = self.word[0]
 
@@ -41,35 +48,34 @@ class InputWord:
 
     def reply(self):
         from cities_lists import abc
-        for k in abc:
-            if k == self.last_letter:
-                for j in abc[k]:
-                    if j not in mentioned:
-                        return str(j)
-        return False
+        while True:
+            for k in abc:
+                if k == self.last_letter:
+                    if k != False:
+                        for j in abc[k]:
+                            if str(j) not in mentioned:
+                                mentioned.append(str(j))
+                                return str(j)
+                        return False
+                    else:
+                        self.last_letter = self.word[-2]
 
 
 def cities_game():  # noqa: C901
-    global mentioned, first_time, prevword
+    global mentioned, first_time, prevword, turn
     print("Игра в 'Города России' началась.\nЧтобы выйти, введите '!'")
     print('----------------------------')
-    turn = 0
     print('Это', turn + 1, 'кон.')
     city = InputWord(input('Вводи название города: '))
-    while city != '!':
+    while True:
         check(city)
-        mentioned.append(city)
         prevword = city.reply()
         if not prevword:
             print('Я проиграл - незнаю города на такую букву.')
         else:
-            print('А мой ответ - ' + str(prevword))
+            print('А мой ответ - ' + prevword)
             first_time = False
             prevword = InputWord(prevword)
-            mentioned.append(prevword)
         turn += 1
         print('Это', turn + 1, 'кон.')
         city = InputWord(input('Вводи название города: '))
-    print('Игра завершилась на', turn, 'коне.')
-    from turnoff import turnoff
-    turnoff()
