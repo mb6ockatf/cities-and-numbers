@@ -1,3 +1,4 @@
+from time import sleep
 game_choice = int(input('Приветствую!\n\
 Выберите один из следующих пунктов, чтобы продолжить:\n\n\
 - "Города России". Введите "1", чтобы запустить.\n\
@@ -13,12 +14,15 @@ if game_choice == 1:
 Чтобы узнать правила, введите 1. Чтобы начать, введите 2\nВаш выбор: ")
     while rules_or_game != '1' and rules_or_game != '2':
         rules_or_game = input('Вы ввели что-то непонятное.\nВаш выбор: ')
-    import cities_game
     if rules_or_game == '1':
-        cities_game.text_cities_rules()
-        cities_game.cities_game()
+        print("Правила игры в 'Города России':\n\
+Каждый участник в свою очередь называет реально существующий город России,\n\
+название которого начинается на ту букву, которой оканчивается название предыдущего названного города.\n\
+Если вы уже дочитали это сообщение, то просто подождите.\n")
+        sleep(8)
+        import cities_game
     else:
-        cities_game.cities_game()
+        import cities_game
 
 
 elif game_choice == 2:
@@ -32,7 +36,6 @@ elif game_choice == 2:
         числа, следовательно, в одной игре не может быть больше 50 конов \n\
         У кого число больше, тот и выиграл кон.\n\
         При этом, *совпадение чисел допускается* .")
-        from time import sleep
         sleep(8)
         import numbers_game
     else:
