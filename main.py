@@ -26,9 +26,14 @@ elif game_choice == 2:
 Ваш выбор: ")
     while rules_or_game != '1' and rules_or_game != '2':
         rules_or_game = input("Вы ввели что-то непонятное.\nВаш выбор: ")
-    import numbers_game
     if rules_or_game == '1':
-        numbers_game.text_numbers_rules()
-        numbers_game.numbers_game()
+        print("Правила игры в 'Числа':\n\
+        Назовите любое целое число от 1 до 100. Нельзя называть уже названные \n\
+        числа, следовательно, в одной игре не может быть больше 50 конов \n\
+        У кого число больше, тот и выиграл кон.\n\
+        При этом, *совпадение чисел допускается* .")
+        from time import sleep
+        sleep(8)
+        import numbers_game
     else:
-        numbers_game.numbers_game()
+        import numbers_game
