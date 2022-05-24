@@ -1,22 +1,40 @@
 from time import sleep
 from random import randint
 
-game_choice = input(
-    'Приветствую!\n\
-Выберите один из следующих пунктов, чтобы продолжить:\n\
-- "Города России". Введите "1", чтобы запустить.\n\
-- "Числа". Введите "2", чтобы запустить.\n\
-Ваш выбор: '
-)
-while game_choice not in {"1", "2"}:
-    game_choice = input(
-        "Вы ввели что-то непонятное.\n\
+m_hello = 'Приветствую!\nВыберите один из \
+следующих пунктов, чтобы продолжить:\n- "Города \
+России". Введите "1", чтобызапустить.\n- "Числа".\
+ Введите "2", чтобы запустить.\nВаш выбор: '
+m_try_again = 'Вы ввели что-то непонятное.\nВаш выбор: '
+m_city_bot_lost = "Я проиграл и не знаю города на такую букву"
+
+
+def _exit_():
+    print("Всё, игра закончена. Программа выключится через 8 секунд.")
+    for downtime in range(8, 0, -1):
+        if downtime in {4, 3, 2}:
+            print(f"Осталось {downtime} секунды")
+        elif downtime == 1:
+            print(f"Осталась 1 секунда")
+        else:
+            print(f"Осталось {downtime} секунд")
+        sleep(1)
+    exit()
+
+
+def ret_m_gametype_chosen(gametype: str) -> str:
+    return f"Вы выбрали пункт '{gametype}'\n\
+Чтобы узнать правила, введите 1. Чтобы начать, введите 2\n\
 Ваш выбор: "
-    )
 
 
+def check_one_two(smth: str) -> None:
+    while smth not in {"1", "2"}:
+        smth = input(m_try_again)
+    return smth
+
+game_choice = check_one_two(input(m_hello))
 if game_choice == "1":
-    # abc = {"а": a, "б": b,"в": v,"г": g,"д": d,"е": e," ё": None,"ж": zh,"з": z,"и": i,"й": j,"к": k,"л": ll,"м": m,"н": n,"о": o,"п": p,"р": r,"с": s,"т": t,"у": y,"ф": f,"х": h,"ц": ts,"ч": ch,"ш": sh,"щ": sch,"ъ": None,"ы": None,"ь": None "э": ee, "ю": jy, "я": ja}
     abc = {
         "а": [
             "Абакан",
@@ -1044,58 +1062,34 @@ if game_choice == "1":
             "Яхрома",
         ],
     }
-
-    rules_or_game = input(
-        "Вы выбрали пункт 'Города Росcии'.\n\
-Чтобы узнать правила, введите 1. Чтобы начать, введите 2\n\
-Ваш выбор: "
-    )
-    while rules_or_game not in {"1", "2"}:
-        rules_or_game = input("Вы ввели что-то непонятное.\nВаш выбор: ")
+    rules_or_game = check_one_two(input(ret_m_gametype_chosen('Города России')))
     if rules_or_game == "1":
-        print(
-            "Правила игры в 'Города России':\n\
+        print("Правила игры в 'Города России':\n\
 Все участники по очереди называют города России.\n\
-Название должно начинаться на букву предыдущего названного города.\n"
-        )
+Название должно начинаться на букву предыдущего названного города.\n")
         sleep(8)
-    first_time = True
     mentioned = set()
     previous_city = None
     previous_last_letter = None
     last_letter = None
     turn = 0
-    print(
-        f"Игра в 'Города России' началась.\n\
+    print(f"Игра в 'Города России' началась.\n\
 Чтобы выйти, введите '!'\n\
 {''.center(100, '-')}\n\
-Это {turn + 1} кон\n"
-    )
+Это {turn + 1} кон\n")
     while True:
         city = input("Вводи название города: ").lower()
         if city == "!":
-            print("Всё, игра закончена. Программа выключится через 8 секунд.")
-            for downtime in range(8, 0, -1):
-                if downtime in {4, 3, 2}:
-                    print(f"Осталось {downtime} секунды")
-                elif downtime == 1:
-                    print(f"Осталось 1 секунда")
-                else:
-                    print(f"Осталось {downtime} секунд")
-                sleep(1)
-            quit()
+            _exit_()
         while True:
             if city in mentioned:
-                city = input("Такой город уже был. \nВводи название города: ")
+                city = input("Такой город уже был. \nВводи название города: ").lower()
                 continue
-            elif not first_time and not city[0] == previous_last_letter:
-                city = input(
-                    "Это слово не начинается на последнюю букву предыдущего города.\n\
-Введите другое: "
-                ).lower()
+            elif bool(previous_last_letter) and (city[0] != previous_last_letter):
+                # if not previous_last_letter means if it was not the first turn
+                city = input("Это слово не начинается на последнюю букву предыдущего города.\nВведите другое: ").lower()
                 continue
             else:
-                first_time = False
                 break
         mentioned.add(city)
         if city[-1] in "ёъьы":
@@ -1103,61 +1097,33 @@ if game_choice == "1":
         else:
             last_letter = city[-1]
         for letter_list_key in abc.keys():
-            if letter_list_key == last_letter and abc[letter_list_key] is not None:
+            if letter_list_key == last_letter and abc[letter_list_key]:
                 for possible_answer in abc[letter_list_key]:
                     if possible_answer not in mentioned:
                         mentioned.add(possible_answer)
                         previous_city = possible_answer
                         break
-                    else:
-                        previous_city = None
         if not previous_city:
-            print(
-                "Я проиграл и не знаю города на такую буквую\n\
-Всё, игра закончена. Программа выключится через 8 секунд."
-            )
-            for downtime in range(8, 0, -1):
-                if downtime in {4, 3, 2}:
-                    print(f"Осталось {downtime} секунды")
-                elif downtime == 1:
-                    print(f"Осталось 1 секунда")
-                else:
-                    print(f"Осталось {downtime} секунд")
-                sleep(1)
-            quit()
-        else:
-            print(f"А мой ответ - {previous_city}")
-            if previous_city[-1] in "ёъьы":
-                previous_last_letter = previous_city[-2]
-            else:
-                previous_last_letter = previous_city[-1]
+            print(m_city_bot_lost)
+            _exit_()
+        print(f"А мой ответ - {previous_city}")
+        previous_last_letter = previous_city[-2] if previous_city[-1] in "ёъьы" else previous_city[-1]
         previous_city = None
         turn += 1
         print(f"Это {turn} кон.")
 elif game_choice == "2":
-    rules_or_game = input(
-        "Вы выбрали пункт 'Числа'.\n\
-Чтобы узнать правила, введите 1. Чтобы начать, введите 2\n\
-Ваш выбор: "
-    )
-    while rules_or_game != "1" and rules_or_game != "2":
-        rules_or_game = input("Вы ввели что-то непонятное.\nВаш выбор: ")
+    rules_or_game = check_one_two(input(ret_m_gametype_chosen('Числа')))
     if rules_or_game == "1":
-        print(
-            "Правила игры в 'Числа':\n\
+        print("Правила игры в 'Числа':\n\
 Назовите любое целое число от 1 до 100. Нельзя называть уже названные \n\
 числа, следовательно, в одной игре не может быть больше 50 конов \n\
 У кого число больше, тот и выиграл кон.\n\
-При этом, *совпадение чисел допускается* ."
-        )
+При этом, *совпадение чисел допускается* .")
         sleep(8)
-    wins, loses, overall, balance, mentioned = 0, 0, 0, 0, []
-    your_num = print(
-        "Игра в 'Числа' началась.\n\
-Чтобы закончить, введите !\n\
-Ты начинаешь.\n\
-Вводи своё число."
-    )
+    wins, loses, overall, balance, mentioned = 0, 0, 0, 0, set()
+    your_num = print("Игра в 'Числа' началась.\n\
+Чтобы закончить, введите !\nТы начинаешь.\n\
+Вводи своё число.")
     your_num = input()
     while your_num != "!":
         try:
@@ -1166,16 +1132,12 @@ elif game_choice == "2":
             your_num = input("Это не целое число, введите другое: ")
             continue
         if your_num in mentioned:
-            your_num = input(
-                "Такое число уже было названо, введите другое.\nВведите число: "
-            )
+            your_num = input("Такое число уже было названо, введите другое.\nВведите число: ")
             continue
         elif not 1 <= int(your_num) <= 100:
-            your_num = input(
-                "Твоё число не в ходит в диапазон от 1 до 100\nВведите число: "
-            )
+            your_num = input("Твоё число не в ходит в диапазон от 1 до 100\nВведите число: ")
             continue
-        mentioned += [your_num]
+        mentioned.add(your_num)
         if len(mentioned) == 100:
             print("Чисел больше нет, игра завершилась.")
             your_num = "!"
@@ -1184,7 +1146,7 @@ elif game_choice == "2":
             answer = randint(1, 100)
             while answer in mentioned:
                 answer = randint(1, 100)
-            mentioned += [answer]
+            mentioned.add(answer)
         print(f"А мой ответ равен {answer}")
         overall += 1
         if answer > your_num:
@@ -1194,20 +1156,8 @@ elif game_choice == "2":
         else:
             balance += 1
         your_num = input("Вводи своё число: ")
-    print(
-        f"Пришло время подвести итоги.\n\
+    print(f"Пришло время подвести итоги.\n\
 Пользователь выиграл: {wins}\n\
 Пользователь проиграл: {loses}\n\
-Баланс: {balance}\n\
-Всего конов: {overall}\n"
-    )
-    print("Всё, игра закончена. Программа выключится через 8 секунд.")
-    for downtime in range(8, 0, -1):
-        if downtime in {4, 3, 2}:
-            print(f"Осталось {downtime} секунды")
-        elif downtime == 1:
-            print(f"Осталось 1 секунда")
-        else:
-            print(f"Осталось {downtime} секунд")
-        sleep(1)
-    quit()
+Баланс: {balance}\nВсего конов: {overall}\n")
+    _exit_()
